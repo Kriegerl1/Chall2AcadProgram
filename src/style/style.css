@@ -1,0 +1,267 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    font-family: "Righteous";
+    text-decoration: none;
+
+}
+
+:root {
+    --set-web-color-p: rgb(30, 30, 30);
+    --set-web-color-bg: linear-gradient(90deg, rgb(51, 51, 51) 10%, rgb(112, 114, 114) 50%, rgb(51, 51, 51) 90%);
+    --set-color-i-word: rgb(80, 200, 250);
+    --set-color-word: wheat;
+    --set-body-overflow: none;
+    
+}
+
+/* BARRA DE HEADER */
+header * {
+    font-family: 'Righteous';
+    color: var(--set-color-i-word);
+}
+
+#home {
+    position: absolute;
+    top: 0;
+}
+
+.containner-header {
+    background-color: var(--set-web-color-p);
+    height: 7vh;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+}
+
+.containner-header .header-navigation-content {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-inline: 5%;
+    font-size: 7rem;
+}
+
+.containner-header .header-navigation-content .inner-header-content {
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.containner-header .header-navigation-content .inner-header-content a {
+    margin: 1rem;
+    padding: 0.7rem;
+    background-color: rgb(57, 57, 57);
+    border-radius: 3rem;
+}
+
+.containner-header .header-navigation-content .inner-header-content a:hover {
+    color: wheat;
+    transition: all .5s;
+}
+
+.containner-header .header-navigation-content img {
+    height: 12rem;
+    margin-top: 5rem;
+}
+
+.logo-image-content {
+    transition: all .3s;
+}
+
+.logo-image-content:hover {
+    transform: translateY(-.5rem);
+    scale: 1.1;
+    transition: scale .5s transform .1s;
+}
+
+/* BARRA DE HEADER */
+/*  MAIN DO SITE */
+body {
+    height: auto;
+    margin-bottom: 35vh;
+    background-image: var(--set-web-color-bg);
+}
+
+.containner-main {
+    height: auto;
+    width: 100%;
+    color: var(--set-color-word);
+
+}
+
+.containner-main .layout-section {
+    width: auto;
+    padding: 5rem;
+    margin: 10% 5%;
+    border: .2rem solid;
+    border-image: var(--set-web-color-p);
+    background-color: rgb(25, 25, 25);
+}
+
+.containner-Products {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+}
+
+.div-Products .tittle-content,.div-inputs .tittle-content{
+    text-align: center;
+    font-size: 4.5rem;
+    color: rgb(138, 138, 138);
+}
+.empty-content {
+    font-size: 2rem;
+    color: rgb(190, 190, 190);
+    }
+.div-inputs,
+.div-Products {
+    width: 100%;
+    min-height: 40rem;
+    height: auto;
+    background-color: #fff;
+    font-size: 5rem;
+    color: black;
+    margin: 0 1rem;
+    padding: 3rem;
+}
+
+
+
+.div-inputs button {
+    font-size: 2.5rem;
+    margin-inline: 5%;
+}
+
+.div-inputs input {
+    width: 100%;
+    height: 3rem;
+    margin: 1rem .5rem;
+}
+.div-inputs .inner-data-containner {
+    font-size: 3rem;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.div-inputs .date-content hr{
+    height: 100%;
+    margin: 10%;
+}
+.div-inputs .date-content {
+    display: flex;
+    align-items: center;
+    height: 10rem;
+    width: 100%;
+}
+.div-Products .Product-containner .btn-content {
+    display: flex;
+}
+
+.div-Products .Product-containner {
+    color: rgb(0, 0, 0);
+    background-color: rgb(199, 199, 199);
+    border-radius: .5rem;
+    padding: 1rem;
+    margin: 0.5rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.div-Products .meu-Product ion-icon {
+    cursor: pointer;
+    background-color: rgb(163, 162, 162);
+    border-radius: .5rem;
+    font-size: 2rem;
+    padding: .2em;
+    margin: 0.2rem;
+    transition: all .1s;
+
+}
+
+.div-Products .meu-Product {
+    border-radius: .5rem;
+    margin: 1rem;
+    background-color: rgb(172, 172, 172);
+    padding: .5rem;
+}
+
+.div-Products .meu-Product ion-icon:hover {
+    scale: 1.05;
+    transition: all .2s;
+}
+
+/*  MAIN DO SITE */
+/* -- BARRA DE FOOTER */
+.footer {
+    position: absolute;
+    width: 100%;
+    height: 25vh;
+    background-color: var(--set-web-color-p);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+footer * {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+.footer span {
+    color: grey;
+    font-size: 1.8rem;
+}
+
+
+.footer hr {
+    height: 60%;
+}
+
+.footer .copyright-section {
+    height: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.footer img {
+    height: 5rem;
+    margin: -1.5rem -1rem;
+}
+
+/* -- BARRA DE FOOTER */
+/*   ION-ICONS */
+ion-icon {
+    font-size: 3rem;
+}
+
+/*   ION-ICONS */
+
+.fog{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0, .8);
+    z-index: 999;
+}
+
+.hide{
+    display: var(--set-body-overflow);
+}

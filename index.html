@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="stylesheet" href="./src/style/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS_Academia-de-Programação</title>
+</head>
+
+<body>
+    <div id="home"></div>
+    <!--   MEU CABEÇALHO  -->
+    <header>
+        <div class="containner-header">
+            <div class="header-navigation-content">
+                <div class="logo-image-content"><a href="https://www.linkedin.com/in/leokrodrigues/" target="_blank"
+                        rel="noopener noreferrer">
+                        <img src="./src/media/Logo.png" alt="LOGO-LR"></a>
+                </div>
+                <nav class="inner-header-content">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="https://www.instagram.com/leo_rodrigues1997/" target="_blank">Meu Insta</a></li>
+                    <li><a href="https://wa.me//5549998076236?text=Olá.&type=phone_number&app_absent=0"
+                            target="_blank">Meu Whatsapp</a></li>
+                    <li><a href="https://github.com/Kriegerl1/Chall2AcadProgram" target="_blank">Ropositório Git</a>
+                    </li>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!--   MEU CABEÇALHO  -->
+
+    <main>
+        <div class="containner-main">
+            <div class="layout-section">
+                <div class="containner-Products">
+                    <div class="div-Products">
+                        <div class="tittle-content">
+                            <h1>Produtos</h1>
+                            <hr>
+                            <span class="empty-content"></span>
+                        </div>
+
+                    </div>
+                    <div class="div-inputs">
+
+                        <form>
+                            <div class="tittle-content">
+                                <h1>Cadastro de produtos</h1>
+                                <hr>
+                            </div>
+                            
+                            <div>
+                                <h2>Nome do Produto</h2>
+                                <input name="prod-input-name" placeholder="Nome do Produto" type="text"
+                                    required="required" class="Product">
+                                <span class="aviso"></span>
+                            </div>
+                            
+                            <div>
+                                <h2>Descrição</h2>
+                                <input name="prod-input-info" placeholder="Descrição do Produto" type="text"
+                                    required="required" class="Product">
+                            </div>
+
+                            <div>
+                                <h2>Preço</h2><input name="prod-input-price" placeholder="Digite o preço do produto"
+                                    type="text" class="post-crud">
+                            </div>
+
+                            <div>
+                                <h2>Data</h2><input name="prod-input-data"
+                                    placeholder="Digite a data de fabricação do produto" type="text" class="post-crud">
+                            </div>
+
+                            <div>
+                                <h2>Fabricante</h2><input name="prod-input-factory"
+                                    placeholder="Digite o fabricante do produto" type="text" class="post-crud">
+                                <button type="submit">enviar</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="fog hide">
+            <!-- 
+            <div class="close-btn"><ion-icon name="close"></ion-icon>
+            </div>
+            <div class="div-inputs">
+                <form class="edit">
+                    <div>
+                        <h2>Nome do produto</h2>
+                        <input name="prod-input-name" placeholder="Digite o nome do produto" value="${$oldName}"
+                            type="text" class="post-crud">
+                        <span class="aviso-nome"></span>
+                    </div>
+                    <div>
+                        <h2>Descrição</h2><input name="prod-input-info" value="${$oldContent}"
+                            placeholder="Digite a descrição do produto" type="text" class="post-crud">
+                    </div>
+                    <div>
+                        <h2>Preço</h2><input name="prod-input-price" placeholder="Digite o preço do produto" type="text"
+                            class="post-crud">
+                    </div>
+                    <h2>Data</h2><input name="prod-input-data" placeholder="Digite a data de fabricação do produto"
+                        type="text" class="post-crud">
+                    <div>
+                        <h2>Fabricante</h2><input name="prod-input-factory" placeholder="Digite o fabricante do produto"
+                            type="text" class="post-crud">
+                    </div><button type="submit" class="btnEdit">Enviar</button>
+                </form>
+            </div>
+        </div> -->
+
+
+        </div>
+    </main>
+
+    <!--   MEU FOOTER -->
+    <footer>
+        <div class="footer">
+            <div class="contact-section">
+                <div class="email-content">
+                    <ion-icon name="mail-outline" style="color:rgb(255, 93, 93)"></ion-icon>Email
+                    <h3 class="contact-link">
+                        <a href="mailto:leokrodrigues@gmail.com">Leonardo R.</a><span>@gmail.com</span>
+                    </h3>
+                </div>
+                <div class="whatssap-content">
+                    <ion-icon name="logo-whatsapp" style="color:rgb(37, 211, 102)"></ion-icon>Whatsapp
+                    <h3 class="contact-link"><a
+                            href="https://wa.me/send/?phone=5549998076236&text='Olá, estou entrando em contato, pelo link do seu Footer.'&type=phone_number&app_absent=0"
+                            target="_blank">(49)
+                            9 9807-6236</a> Leonardo R.</h3>
+                </div>
+            </div>
+            <hr>
+            <div class="copyright-section">
+                <p>Copyright &copy; 2023 <a rel="reopensite" href="https://kriegerl1.github.io/Match-Repo/"><img
+                            src="./src/media/Logo.png" alt="">eonardo
+                        "Krieger" Rodrigues</a> -
+                    Desenvolvedor em formação.</p>
+                <div>
+                    <p>Siga-me
+                        <a href="http://www.linkedin.com/in/leokrodrigues" target="_blank"><ion-icon
+                                name="logo-linkedin"></ion-icon></a>
+                        <a href="https://github.com/Kriegerl1" target="_blank"><ion-icon
+                                name="logo-github"></ion-icon></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--   MEU FOOTER -->
+</body>
+<script src="./src/js/js.js"></script>
+<script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
+
+</html>
