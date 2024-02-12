@@ -1,32 +1,31 @@
 const $meuForm = document.querySelector('form');
 
-const minhaDivProducts = {
-    usuário: [
-        {
-            username: 'Leo',
-        }
-    ],
-    Product: [],
-    firstId: 1,
+const meuEstoque = {
+
+    Produto: [],
+
+    idPrimeiroProduto: 1,
+
 
     readProduct() {
-        minhaDivProducts.Product.forEach(({ id, productName, productInfo, productPrice, productData, productFactory }) => {
-            minhaDivProducts.criaProduct({ id, productName, productInfo, productPrice, productData, productFactory }, true);
-        });
 
+        meuEstoque.Produto.forEach(({ id, productName, productInfo, productPrice, productData, productFactory }) => {
+            meuEstoque.createProduct({ id, productName, productInfo, productPrice, productData, productFactory }, true);
+
+        });
     },
 
-    criaProduct(dados, frontEnd = false) {
+    createProduct(dados, frontEnd = false) {
+        const idInterno = meuEstoque.idPrimeiroProduto++;
 
-        const idInterno = minhaDivProducts.firstId++;
+        var novoProduct = { id: idInterno, ...dados };
 
-        const novoProduct = { id: idInterno, ...dados };
-        minhaDivProducts.Product.push(novoProduct);
+        meuEstoque.Produto.push(novoProduct);
 
         if (frontEnd) {
             const id = id;
-            minhaDivProducts.Product.push({
-                id: id  || idInterno,
+            meuEstoque.Produto.push({
+                id: id || idInterno,
                 productName: dados.productName,
                 productInfo: dados.productInfo,
                 productPrice: dados.productPrice,
@@ -34,7 +33,8 @@ const minhaDivProducts = {
                 productFactory: dados.productFactory,
             });
         }
-        const structureProduct = `
+
+        let structHTMLProduto = `
         <div class="meu-Product" data-id="${idInterno}">
         <div class="name-productName">
             <h2 class="tittle-name">${dados.productName} ID: ${idInterno}</h2>
@@ -50,40 +50,39 @@ const minhaDivProducts = {
             </div>
         </div>
     </div>
-    
     `;
-        const $ListadeProducts = document.querySelector('.div-Products');
-        $ListadeProducts.insertAdjacentHTML('beforeend', structureProduct);
-        console.log(minhaDivProducts.Product)
 
-    }
-    ,
+        let $ListadeProdutos = document.querySelector('.div-Products');
+        
+        $ListadeProdutos.insertAdjacentHTML('beforeend', structHTMLProduto);
 
+        console.log(meuEstoque.Produto)
+    },
 
-    delProduct(id) {
+    deleteProduct(id) {
         const ProductId = Number(id);
 
-        const ProductIndex = minhaDivProducts.Product.findIndex(Product => Product.id === ProductId);
+        const idInterno = meuEstoque.Produto.findIndex(Product => Product.id === ProductId);
 
-        if (ProductIndex !== -1) {
+        if (idInterno !== -1) {
             // Remove o Product da lista
-            minhaDivProducts.Product.splice(ProductIndex, 1);
+            meuEstoque.Produto.splice(idInterno, 1);
             console.log(`Product com ID ${ProductId} excluído com sucesso.`);
         } else {
             console.log(`Product com ID ${ProductId} não encontrado.`);
         }
-        console.log(minhaDivProducts.Product)
-
+        console.log(meuEstoque.Produto)
     }
 
     ,
+
+
     editaProduct(id, newProductName, newInfoProduct, newProductPrice, newProductData, newProductFactory) {
         const ProductId = Number(id);
 
-        const Product = minhaDivProducts.Product.find(Product => Product.id === ProductId);
+        const Product = meuEstoque.Produto.find(Product => Product.id == ProductId);
 
         if (Product) {
-            console.log(Product)
             Product.productName = newProductName;
             Product.productInfo = newInfoProduct;
             Product.productPrice = newProductPrice;
@@ -94,13 +93,13 @@ const minhaDivProducts = {
             if ($productHtml) {
                 $productHtml.innerHTML = `
                     <div class="name-productName">
-                        <h2 class="tittle-name">${newProductName} ID: ${id}</h2>
+                        <h2 class="tittle-name">${newProductName.value} ID: ${id}</h2>
                     </div>
                     <div class="Product-containner">
-                        <h3>${newInfoProduct}</h3>
-                        <p>Preço: ${newProductPrice}</p>
-                        <p>Data de Fabricação: ${newProductData}</p>
-                        <p>Fabricante: ${newProductFactory}</p>
+                        <h3>${newInfoProduct.value}</h3>
+                        <p>Preço: ${newProductPrice.value}</p>
+                        <p>Data de Fabricação: ${newProductData.value}</p>
+                        <p>Fabricante: ${newProductFactory.value}</p>
                         <div class="btn-content">
                             <ion-icon class="del-btn" name="trash-outline"></ion-icon>
                             <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
@@ -114,12 +113,11 @@ const minhaDivProducts = {
             console.log(`Product com ID ${ProductId} não encontrado.`);
         }
     }
-
 };
 
 
 // CRUD [CREATE]
-$meuForm.addEventListener('submit', function criaProductController(infosdoevento) {
+$meuForm.addEventListener('submit', function createProductController(infosdoevento) {
     infosdoevento.preventDefault();
     const $prod_Name = document.querySelector('input[name="prod-input-name"]');
     const $prod_Info = document.querySelector('input[name="prod-input-info"]');
@@ -139,7 +137,7 @@ $meuForm.addEventListener('submit', function criaProductController(infosdoevento
 
     } else {
 
-        minhaDivProducts.criaProduct({
+        meuEstoque.createProduct({
             productName: $prod_Name.value,
             productInfo: $prod_Info.value,
             productPrice: $prod_Price.value,
@@ -155,43 +153,59 @@ $meuForm.addEventListener('submit', function criaProductController(infosdoevento
 
 // CRUD [READ]
 
-minhaDivProducts.readProduct();
+meuEstoque.readProduct();
 
 // Evento de edição de produto
 
 document.querySelector('.div-Products').addEventListener('click', function (event) {
 
     const editBtn = event.target.classList.contains('edit-btn');
+
     if (editBtn) {
-        const elemAtual = event.target;
-        const id = elemAtual.getAttribute('data-id'); // Acessando o atributo data-id do elemento pai
+        const id = event.target.closest('[data-id]').getAttribute('data-id');
         const ProductId = Number(id);
-    
-        const Product = minhaDivProducts.Product.find(Product => Product.id === ProductId);
-    
-        console.log(Number(ProductId), Number(id));
+        const Product = meuEstoque.Produto.find(meuID => meuID.id === ProductId);
+        
         if (Product) {
-            console.log('passo 1');
             const $oldName = Product.productName;
             const $oldContent = Product.productInfo;
             console.log('Clicou no botão de editar\n ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nConteúdo: ', $oldContent);
             let target = document.querySelector('.fog');
             if (target.classList.contains('hide')) {
                 target.classList.remove('hide');
-            console.log('passo 2');
 
             }
 
             // Preenche os campos de edição com os valores do produto atual
             target.innerHTML =
-                `<div class="close-btn"><ion-icon name="close"></ion-icon>
-                </div><div class="div-inputs"><form class="edit"><div><h2>Nome do produto</h2>
-                <input name="prod-input-name" placeholder="Digite o nome do produto" value="${$oldName}" type="text" class="post-crud">
-                <span class="aviso-nome"></span></div><div><h2>Descrição</h2><input name="prod-input-info" value="${$oldContent}" placeholder="Digite a descrição do produto" type="text" class="post-crud"></div><div>
-                <h2>Preço</h2><input name="prod-input-price" placeholder="Digite o preço do produto" type="text" class="post-crud">
-                </div><h2>Data</h2><input name="prod-input-data" placeholder="Digite a data de fabricação do produto" type="text" class="post-crud">
-                <div><h2>Fabricante</h2><input name="prod-input-factory" placeholder="Digite o fabricante do produto" type="text" class="post-crud">
-                </div><button type="submit" class="btnEdit">Enviar</button></form></div></div>
+                `
+                <div class="close-btn"><ion-icon name="close"></ion-icon>
+                </div>
+                <div class="div-inputs">
+                    <form class="edit">
+                        <div>
+                            <h2>Nome do produto</h2>
+                            <input name="prod-input-name-edit" placeholder="Digite o nome do produto" value="${$oldName}" type="text"
+                                class="post-crud">
+                            <span class="aviso-nome"></span>
+                        </div>
+                        <div>
+                            <h2>Descrição</h2><input name="prod-input-info-edit" value="${$oldContent}"
+                                placeholder="Digite a descrição do produto" type="text" class="post-crud">
+                        </div>
+                        <div>
+                            <h2>Preço</h2><input name="prod-input-price-edit" placeholder="Digite o preço do produto" type="text"
+                                class="post-crud">
+                        </div>
+                        <h2>Data</h2><input name="prod-input-data-edit" placeholder="Digite a data de fabricação do produto" type="text"
+                            class="post-crud">
+                        <div>
+                            <h2>Fabricante</h2><input name="prod-input-factory-edit" placeholder="Digite o fabricante do produto" type="text"
+                                class="post-crud">
+                        </div><button type="submit" class="btnEdit">Enviar</button>
+                    </form>
+                </div>
+                </div>
             `;
 
             let closeFullscreen = document.querySelector('.close-btn');
@@ -208,14 +222,14 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             // Adiciona evento de clique ao botão de envio do formulário de edição
             document.querySelector('.btnEdit').addEventListener('click', function (event) {
                 event.preventDefault();
-                const $newName = document.querySelector('input[name="prod-input-name"]').value;
-                const $newInfo = document.querySelector('input[name="prod-input-info"]').value;
-                const $newPrice = document.querySelector('input[name="prod-input-price"]').value;
-                const $newData = document.querySelector('input[name="prod-input-data"]').value;
-                const $newFactory = document.querySelector('input[name="prod-input-factory"]').value;
-                
+                const $newName = document.querySelector('input[name="prod-input-name-edit"]');
+                const $newInfo = document.querySelector('input[name="prod-input-info-edit"]');
+                const $newPrice = document.querySelector('input[name="prod-input-price-edit"]');
+                const $newData = document.querySelector('input[name="prod-input-data-edit"]');
+                const $newFactory = document.querySelector('input[name="prod-input-factory-edit"]');
 
-                minhaDivProducts.editaProduct(id, $newName, $newInfo, $newPrice, $newData, $newFactory); // Chama o método de edição do produto
+
+                meuEstoque.editaProduct(id, $newName, $newInfo, $newPrice, $newData, $newFactory); // Chama o método de edição do produto
             });
         }
     }
@@ -231,7 +245,7 @@ document.querySelector('.div-Products').addEventListener('click', function (info
         const ProductElement = infosdoevento.target.closest('.meu-Product');
         const id = ProductElement.getAttribute('data-id');
         console.log('Clicou no botão de exclusão');
-        minhaDivProducts.delProduct(id);
+        meuEstoque.deleteProduct(id);
         ProductElement.remove();
         emptyPoster();
     }
@@ -241,7 +255,7 @@ document.querySelector('.div-Products').addEventListener('click', function (info
 
 // function emptyPoster() {
 //     const emptyProduct = document.querySelector('.empty-content')
-//     if (minhaDivProducts.Product.length === 0) {
+//     if (meuEstoque.Product.length === 0) {
 //         emptyProduct.innerHTML = 'Não há produtos';
 //     } else {
 //         emptyProduct.innerHTML = '';
