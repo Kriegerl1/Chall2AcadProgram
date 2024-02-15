@@ -1,15 +1,15 @@
-const createBtn = document.querySelector('.system-btn-create');
-const readBtn = document.querySelector('.system-btn-read');
-const createTarget = document.querySelector('.div-inputs form');
-const readTarget = document.querySelector('.div-Products');
+var createBtn = document.querySelector('.system-btn-create');
+var readBtn = document.querySelector('.system-btn-read');
+var createTarget = document.querySelector('.div-inputs form');
+var readTarget = document.querySelector('.div-Products');
 const pi = 3.14
+
 createBtn.addEventListener('click', function (event) {
     createTarget.hidden = false;
     readTarget.hidden = true;
     createBtn.hidden = true;
     readBtn.hidden = false;
 });
-
 readBtn.addEventListener('click', function (event) {
     createTarget.hidden = true;
     readTarget.hidden = false;
@@ -17,67 +17,75 @@ readBtn.addEventListener('click', function (event) {
     readBtn.hidden = true;
 });
 
-const $meuForm = document.querySelector('form');
 
-const meuEstoque = {
-
-    Produto: [],
-
-    idPrimeiroProduto: 1,
+// FUNÇÃO DE ALTERNAR ENTRE CADASTRO E ESTOQUE, SOMENTE VISUAL
 
 
-    readProduct() {
 
-        meuEstoque.Produto.forEach(({ id, productName, category, productInfo, productPrice, productData, productFactory }) => {
-            meuEstoque.createProduct({ id, productName, category, productInfo, productPrice, productData, productFactory }, true);
+// ABAIXO BACKEND DA APLICAÇÃO
+
+const myStorage = {
+
+    myData: [], // MEU ARRAY DE ESTOQUE
+
+    firstDataID: 1, // DETERMINA QUE O PRIMEIRO ID, QUE É BASEADO NO PRODUTO.LENGTH, SEJA 1
+
+
+    READ() { // LEITURA DO CRUD
+
+        myStorage.myData.forEach(({ id, productName, category, productInfo, productPrice, productData, productFactory }) => {
+            myStorage.CREATE({ id, productName, category, productInfo, productPrice, productData, productFactory }, true);
 
         });
     },
 
-    createProduct(dados, frontEnd = false) {
-        const idInterno = meuEstoque.idPrimeiroProduto++;
+    CREATE(dados, frontEnd = false) { // CRIAÇÃO DOS DADOS BACKEND DO CRUD
+        const myID = myStorage.firstDataID++; // AUTO INCREMENTO DO ID CRIADO COM VALOR INICIAL '1'
 
 
-        var novoProduct = { id: idInterno, ...dados };
+        var newData = { id: myID, ...dados }; // VARIÁVEL QUE CONCATENA O ID COM OS DADOS RECEBIDOS
 
-        meuEstoque.Produto.push(novoProduct);
+        myStorage.myData.push(newData); // VARIÁVEL QUE ADICIONA O 'newData' DENTRO DO ARRAY 'myStorage' NO BACKEND;
 
         if (frontEnd) {
-            meuEstoque.Produto.push({
-                id: idInterno,
+            myStorage.myData.push({
+                id: myID,
                 productName: dados.productName,
                 category: dados.category,
                 productInfo: dados.productInfo,
                 productPrice: dados.productPrice,
                 productData: dados.productData,
                 productFactory: dados.productFactory,
-            });
+            }); // ADICIONA OS DADOS PARA A UTILIZAÇÃO FRONTEND
 
 
         }
 
+        // CONSTRUTOR DO PRODUTO NO HTML
         let structHTMLProduto = `
-        <div class="meu-Product" data-id="${idInterno}">
-        <div class="name-productName">
-            <h2 class="tittle-name">Nome: ${dados.productName} <hr> id de Serie: ${'CdP0' + idInterno}</h2>
-        </div>
-        <div class="Product-containner">
-            <p>Descrição: ${dados.productInfo}</p>
-            <p>Categoria: ${dados.category}</p>
-            <p>Preço: ${dados.productPrice}</p>
-            <p>Data de Fabricação: ${dados.productData}</p>
-            <p>Fabricante: ${dados.productFactory}</p>
-            <div class="btn-content">
-            <ion-icon class="del-btn" name="trash-outline"></ion-icon>
-            <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
-            </div>
-            </div>
-            </div>
-            `;
-        let structHTMLChamado = `
-                <div class="meu-Product" data-id="${idInterno}">
+        <div class="meu-Product" data-id="${myID}">
             <div class="name-productName">
-                <h2 class="tittle-name">Nome: ${dados.productName} <hr> id de Serie: ${'CdS0' + idInterno}</h2>
+                <h2 class="tittle-name">Nome: ${dados.productName} <hr> id de Serie: ${'CdP0' + myID}</h2>
+            </div>
+            <div class="Product-containner">
+                <p>Descrição: ${dados.productInfo}</p>
+                <p>Categoria: ${dados.category}</p>
+                <p>Preço: ${dados.productPrice}</p>
+                <p>Data de Fabricação: ${dados.productData}</p>
+                <p>Fabricante: ${dados.productFactory}</p>
+                <div class="btn-content">
+                    <ion-icon class="del-btn" name="trash-outline"></ion-icon>
+                    <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+            `;
+
+        // CONSTRUTOR DO CHAMADO NO HTML
+        let structHTMLChamado = `
+        <div class="meu-Product" data-id="${myID}">
+            <div class="name-productName">
+                <h2 class="tittle-name">Nome: ${dados.productName} <hr> id de Serie: ${'CdS0' + myID}</h2>
             </div>
             <div class="Product-containner">
                 <p>Descrição: ${dados.productInfo}</p>
@@ -85,11 +93,13 @@ const meuEstoque = {
                 <p>Orçamento: ${dados.productPrice}</p>
                 <p>Data do Chamado: ${dados.productData}</p>
                 <div class="btn-content">
-                <ion-icon class="del-btn" name="trash-outline"></ion-icon>
-                <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
+                    <ion-icon class="del-btn" name="trash-outline"></ion-icon>
+                    <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
                 </div>
-                </div>
-                </div>`
+            </div>
+        </div>`
+
+        // CONDIÇÃO QUE DETERMINA QUAL CONSTRUTOR SERÁ UTILIZADO
         if (dados.category === 'Produto') {
             let $ListadeProdutos = document.querySelector('.div-Products');
 
@@ -99,33 +109,34 @@ const meuEstoque = {
 
             $ListadeChamados.insertAdjacentHTML('beforeend', structHTMLChamado);
         }
-        console.log(meuEstoque.Produto)
+        console.log(myStorage.myData) // TODA VEZ QUE UM NOVO "DATA" É ADICIONADO, É LANÇANDO NO CONSOLE O ARRAY ATUALIZADO.
     },
 
-    deleteProduct(id) {
-        const ProductId = Number(id);
+    DELETE(id) {
+        const ProductId = Number(id); // DETERMINA QUE O ID É UM NUMERO.
 
-        const idInterno = meuEstoque.Produto.findIndex(Product => Product.id === ProductId);
+        const myID = myStorage.myData.findIndex(Product => Product.id === ProductId); // ENCONTRA O ID DENTRO DO ARRAY 'myStorage'
 
-        if (idInterno !== -1) {
-            // Remove o Product da lista
-            meuEstoque.Produto.splice(idInterno, 1);
+        // SE O ID SELECIONADO FOR DIFERENTE DE -1, É RETIRADO DO ARRAY.
+        if (myID !== -1) {
+            myStorage.myData.splice(myID, 1);
             console.log(`Product com ID ${ProductId} excluído com sucesso.`);
         } else {
             console.log(`Product com ID ${ProductId} não encontrado.`);
         }
-        console.log(meuEstoque.Produto)
+        console.log(myStorage.myData) // ATUALIZA O ARRAY NO CONSOLE.
     }
 
     ,
 
 
-    editaProduct(id, newProductName, category, newInfoProduct, newProductPrice, newProductData, newProductFactory) {
+    UPDATE(id, newProductName, category, newInfoProduct, newProductPrice, newProductData, newProductFactory) {
         const ProductId = Number(id);
 
-        const Product = meuEstoque.Produto.find(Product => Product.id == ProductId);
+        const Product = myStorage.myData.find(Product => Product.id == ProductId); // ENCONTRA O ID DENTRO DO ARRAY 'myStorage'
 
-        if (Product) {
+        if (Product) { //SE ENCONTRAR O ID, INICIA A EDIÇÃO DO 'DATA'
+
             Product.productName = newProductName;
             Product.category = category;
             Product.productInfo = newInfoProduct;
@@ -133,26 +144,29 @@ const meuEstoque = {
             Product.productData = newProductData;
             Product.productFactory = newProductFactory;
 
-            const $productHtml = document.querySelector(`.meu-Product[data-id="${id}"]`); // Corrigido aqui
-            if ($productHtml) {
-                let proserie = 'CdP0', serserie = 'CdS0', categorySerial, htmlFactory, htmlData;
+            const $dataHTMLUpdate = document.querySelector(`.meu-Product[data-id="${ProductId}"]`); // TARGET ONDE SERÁ ALTERADO OS DADOS. SE BASEIA NO ${ProductId}.
 
-                if (category.value === 'Produto') {
-                    categorySerial = proserie;
+            if ($dataHTMLUpdate) {
+                let serieProduct = 'CdP0', serieChamado = 'CdS0', categorySerial, htmlFactory, htmlData; // VARIÁVEIS DE SERIALIZAÇÃO
+
+                if (category.value === 'Produto') { // SE A CATEGORIA FOR "Produto" ENTRA A CONDIÇÃO E ALTERA OS DADOS.
+                    categorySerial = serieProduct;
                     htmlFactory = `<p>Fabricante: ${newProductFactory.value}</p>`;
                     htmlData = `<p>Data de Fabricação: ${newProductData.value}</p>`
                     htmlPrice = `<p>Preço: ${newProductPrice.value}</p>`
-                } else {
-                    categorySerial = serserie;
+                } else { // SE NÃO FOR ENCONTRADO, ALTERA TAMBÉM.
+                    categorySerial = serieChamado;
                     htmlFactory = ``;
                     htmlData = `<p>Data do chamado: ${newProductData.value}</p>`;
                     htmlPrice = `<p>Orçamento: ${newProductPrice.value}</p>`
 
                 }
 
-                $productHtml.innerHTML = `
+                // BASE QUE É ALTERADA COM A CONDIÇÃO ACIMA, TODAS AS PARTES EM HTML DEVERIAM TER FICADO ASSIM...
+
+                $dataHTMLUpdate.innerHTML = `
                     <div class="name-productName">
-                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${categorySerial + id}</h2>
+                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${categorySerial + ProductId}</h2>
                     </div>
                     <div class="Product-containner">
                         <p>Descrição: ${newInfoProduct.value}</p>
@@ -174,8 +188,16 @@ const meuEstoque = {
 };
 
 
+
+// ACIMA BACKEND DA APLICAÇÃO
+
+
+
+// ABAIXO O FRONTEND DA APLICAÇÃO
+
+
 // CRUD [CREATE]
-$meuForm.addEventListener('submit', function createProductController(infosdoevento) {
+document.querySelector('form').addEventListener('submit', function CREATEController(infosdoevento) {
     infosdoevento.preventDefault();
     const select = document.getElementById('input-category');
     const option = select.options[select.selectedIndex];
@@ -191,11 +213,11 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
     let target = document.querySelector('.aviso');
     if ($prod_Name.value === '' || $prod_Name.value.length <= 5) {
 
-        target.innerHTML = 'Seu nome deve conter no mínimo 6 caracteres.';
+        target.innerHTML = 'Seu nome deve conter no mínimo 6 caracteres.'; // EXIBE ESSA MENSAGEM CASO O NOME TENHA MENOS DE 6 LETRAS. E NÃO CRIA O OBJETO.
 
     } else {
-
-        meuEstoque.createProduct({
+        //CRIA O OBJETO CASO TENHA MAIS DE 5 LETRAS;
+        myStorage.CREATE({
             productName: $prod_Name.value,
             category: $category_type,
             productInfo: $prod_Info.value,
@@ -204,7 +226,7 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
             productFactory: $prod_Factory.value
         })
 
-        target.innerHTML = '';
+        target.innerHTML = ''; // LIMPRA O CAMPO DO AVISO.
 
     }
     emptyPoster();
@@ -212,21 +234,28 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
 
 // CRUD [READ]
 
-meuEstoque.readProduct();
+myStorage.READ();
 
 // CRUD [UPDATE]
 
 document.querySelector('.div-Products').addEventListener('click', function (event) {
 
-    const editBtn = event.target.classList.contains('edit-btn');
+    // TODA MINHA DOR ESTÁ CONCENTRADA NISSO AQUI...
 
-    if (editBtn) {
-        const id = event.target.closest('[data-id]').getAttribute('data-id');
-        const ProductId = Number(id);
-        const Product = meuEstoque.Produto.find(meuID => meuID.id === ProductId);
+    const editBtn = event.target.classList.contains('edit-btn'); // TARGET DO BOTÃO DE EDIÇÃO
+
+    if (editBtn) { // SE O BOTÃO FOR ACIONADO
+        const id = event.target.closest('[data-id]').getAttribute('data-id'); // ELE BUSCA O ALVO MAIS PRÓXIMO COM O NOME [data-id], LOGO É O QUE ESTÁ DENTRO DO OBJETO.
+
+        const ProductId = Number(id);// DETERMINA QUE O ID É UM NUMERO
+
+        const Product = myStorage.myData.find(meuID => meuID.id === ProductId); // ENCONTRA O ID DENTRO DO ARRAY 'MyStorage'.
 
 
         if (Product) {
+
+            // AS VARIÁVEIS RECEBEM O VALOR DE CADA CARACTERISTICA DO OBJETO ANTES DA EDIÇÃO.
+
             const $oldName = Product.productName;
             const $category = Product.category;
             const $oldInfo = Product.productInfo;
@@ -234,6 +263,8 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             const $oldData = Product.productData;
             const $oldFactory = Product.productFactory;
 
+
+            // CONSTRUTOR DO PRODUTO SELECIONADO NO CONSOLE, NEM PRECISAVA DISSO NA VERDADE...
             const html_produto = `
                 Produto
             Id do produto: ${id}
@@ -245,15 +276,14 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             `
             console.log(html_produto);
 
-
+            // TARGET ONDE SERÁ "INSTANCIADO" O  EDITOR
             let target = document.querySelector('.fog');
             if (target.classList.contains('hide')) {
                 target.classList.remove('hide');
 
             }
 
-
-            // Preenche os campos de edição com os valores do produto atual
+            // CONSTRUTOR DO EDITOR DE PRODUTO
             let structHTMLEditorProduto =
                 `
                 <div class="edit-wrapper">
@@ -262,7 +292,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 <div class="div-inputs">
                     <form class="edit">
                     <div class="tittle-content">
-                    <h1>Edição de produtos</h1>
+                    <h1>Edição de produto</h1>
                     <hr>
                 </div>
                 
@@ -297,7 +327,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 </div>
                 </div>
             `;
-
+            // CONSTRUTOR DO EDITOR DE CHAMADO
             let structHTMLEditorServico =
                 `
             <div class="edit-wrapper">
@@ -306,7 +336,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             <div class="div-inputs">
                 <form class="edit">
                 <div class="tittle-content">
-                <h1>Edição de produtos</h1>
+                <h1>Edição de chamado de serviço</h1>
                 <hr>
             </div>
             
@@ -338,7 +368,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             </div>
             </div>
         `;
-
+            // CONDIÇÃO DE QUE DETERMINA QUAL CONSTRUTOR SERÁ UTILIZADO
             if ($category === 'Produto') {
 
                 target.insertAdjacentHTML('afterbegin', structHTMLEditorProduto);
@@ -349,6 +379,8 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 target.insertAdjacentHTML('afterbegin', structHTMLEditorServico);
             }
 
+            // FUNÇÃO DE FECHAR DO EDITOR
+            
             let closeFullscreen = document.querySelector('.close-btn');
             document.body.style.setProperty('--set-body-overflow', 'hidden');
             closeFullscreen.addEventListener('click', (event) => {
@@ -360,7 +392,6 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 }
             });
 
-            // Adiciona evento de clique ao botão de envio do formulário de edição
             document.querySelector('.btnEdit').addEventListener('click', function (event) {
                 event.preventDefault();
 
@@ -370,6 +401,9 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 const $newPrice = document.querySelector('input[name="prod-input-price-edit"]');
                 const $newData = document.querySelector('input[name="prod-input-data-edit"]');
                 const $newFactory = document.querySelector('input[name="prod-input-factory-edit"]');
+
+                // CONDIÇÕES PARA ALTERAR APENAS O QUE FOI EDITADO
+
                 if ($newName.value === '') {
                     $newName.value = $oldName;
                 } else if ($newName.value.length <= 5) {
@@ -398,8 +432,8 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                     } else {
                         $newFactory === ''
                     }
-                        meuEstoque.editaProduct(id, $newName, $category, $newInfo, $newPrice, $newData, $newFactory);
-                        warning.innerHTML = '';
+                    myStorage.UPDATE(id, $newName, $category, $newInfo, $newPrice, $newData, $newFactory);
+                    warning.innerHTML = '';
                 }
             });
 
@@ -419,17 +453,17 @@ document.querySelector('.div-Products').addEventListener('click', function (info
         const ProductElement = infosdoevento.target.closest('.meu-Product');
         const id = ProductElement.getAttribute('data-id');
         console.log('Clicou no botão de exclusão');
-        meuEstoque.deleteProduct(id);
+        myStorage.DELETE(id);
         ProductElement.remove();
         emptyPoster();
     }
 
 });
 
-
+// FUNÇÃO QUE ESCREVE QUE O ARRAY ESTÁ VAZIO, SÓ VISUAL...
 function emptyPoster() {
     const emptyProduct = document.querySelector('.empty-content')
-    if (meuEstoque.Produto.length === 0) {
+    if (myStorage.myData.length === 0) {
         emptyProduct.innerHTML = 'O estoque está vazio';
     } else {
         emptyProduct.innerHTML = '';
@@ -437,3 +471,4 @@ function emptyPoster() {
 }
 emptyPoster();
 
+// ACIMA O FRONTEND DA APLICAÇÃO
