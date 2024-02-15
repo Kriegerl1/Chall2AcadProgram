@@ -74,7 +74,8 @@ const meuEstoque = {
             </div>
             </div>
             `;
-        let structHTMLChamado = `        <div class="meu-Product" data-id="${idInterno}">
+        let structHTMLChamado = `
+                <div class="meu-Product" data-id="${idInterno}">
             <div class="name-productName">
                 <h2 class="tittle-name">Nome: ${dados.productName} <hr> id de Serie: ${'CdS0' + idInterno}</h2>
             </div>
@@ -136,7 +137,7 @@ const meuEstoque = {
             if ($productHtml) {
                 $productHtml.innerHTML = `
                     <div class="name-productName">
-                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${id}</h2>
+                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${'teste'+id}</h2>
                     </div>
                     <div class="Product-containner">
                         <p>Descrição: ${newInfoProduct.value}<p>
@@ -175,7 +176,7 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
 
 
     let target = document.querySelector('.aviso');
-    if ($prod_Name.value === '' && $prod_Name.value.length <= 5) {
+    if ($prod_Name.value === '' || $prod_Name.value.length <= 5) {
 
         target.innerHTML = 'Seu nome deve conter no mínimo 6 caracteres.';
 
@@ -255,15 +256,14 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                             <h2>Nome do produto</h2>
                             <input name="prod-input-name-edit" placeholder="Digite o nome do produto"  type="text"
                                 class="post-crud">
-                            <span class="aviso-nome"></span>
+                            <span class="aviso"></span>
                         </div>
                         
                         <div>
                         <h2>Categoria</h2>
-                        <select disabled name="prod-input-categ" id="input-category" class="select-input">
+                        <select disabled name="prod-input-categ" id="input-category-edit" class="select-input">
                             <option value="">${$category}</option>
                         </select>
-                        <span class="aviso"></span>
                     </div>
                         <div>
                             <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do produto" type="text" class="post-crud">
@@ -300,15 +300,14 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                         <h2>Nome do produto</h2>
                         <input name="prod-input-name-edit" placeholder="Digite o nome do produto"  type="text"
                             class="post-crud">
-                        <span class="aviso-nome"></span>
+                        <span class="aviso"></span>
                     </div>
                     
                     <div>
                     <h2>Categoria</h2>
-                    <select disabled name="prod-input-categ" id="input-category" class="select-input">
+                    <select disabled name="prod-input-categ" id="input-category-edit" class="select-input">
                         <option value="">${$category}</option>
                     </select>
-                    <span class="aviso"></span>
                 </div>
                     <div>
                         <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do produto" type="text" class="post-crud">
@@ -330,8 +329,9 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 let $teste1 = document.querySelector('.fog');
 
                 target.insertAdjacentHTML('afterbegin', structHTMLEditorProduto);
-            } else {
-                let $teste2 = document.querySelector('.fog');
+            }
+
+            if ($category === 'Serviço') {
 
                 target.insertAdjacentHTML('afterbegin', structHTMLEditorServico);
             }
@@ -351,7 +351,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             document.querySelector('.btnEdit').addEventListener('click', function (event) {
                 event.preventDefault();
                 const $newName = document.querySelector('input[name="prod-input-name-edit"]');
-                const $category = document.getElementById('input-category');
+                const $category = document.getElementById('input-category-edit');
                 const $newInfo = document.querySelector('input[name="prod-input-info-edit"]');
                 const $newPrice = document.querySelector('input[name="prod-input-price-edit"]');
                 const $newData = document.querySelector('input[name="prod-input-data-edit"]');
@@ -359,7 +359,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 if ($newName.value === '') {
                     $newName.value = $oldName;
                 } else if ($newName.value.length <= 5) {
-                    let warning = document.querySelector('.fog .aviso-nome');
+                    let warning = document.querySelector('.fog .aviso');
 
                     warning.innerHTML = "Seu nome deve conter no mínimo 6 caracteres."
                 } else {
