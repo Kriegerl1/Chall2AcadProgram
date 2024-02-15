@@ -93,15 +93,9 @@ const meuEstoque = {
         if (dados.category === 'Produto') {
             let $ListadeProdutos = document.querySelector('.div-Products');
 
-<<<<<<< HEAD
-        let $ListadeProdutos = document.querySelector('.div-Products');
-
-        $ListadeProdutos.insertAdjacentHTML('beforeend', structHTMLProduto);
-=======
             $ListadeProdutos.insertAdjacentHTML('beforeend', structHTMLProduto);
         } else {
             let $ListadeChamados = document.querySelector('.div-Products');
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
 
             $ListadeChamados.insertAdjacentHTML('beforeend', structHTMLChamado);
         }
@@ -141,16 +135,28 @@ const meuEstoque = {
 
             const $productHtml = document.querySelector(`.meu-Product[data-id="${id}"]`); // Corrigido aqui
             if ($productHtml) {
+                let proserie = 'CdP0', serserie = 'CdS0',categorySerial, htmlFactory, htmlData;
+
+                if (category.value === 'Produto'){
+                    categorySerial = proserie;
+                    htmlFactory = `<p>Fabricante: ${newProductFactory.value}</p>`;
+                    htmlData = `<p>Data de Fabricação: ${newProductData.value}</p>`
+                }else{
+                    categorySerial = serserie;
+                    htmlFactory = ``;
+                    htmlData = `<p>Data do chamado: ${newProductData.value}</p>`;
+                }
+
                 $productHtml.innerHTML = `
                     <div class="name-productName">
-                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${'teste'+id}</h2>
+                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${ categorySerial + id}</h2>
                     </div>
                     <div class="Product-containner">
-                        <p>Descrição: ${newInfoProduct.value}<p>
+                        <p>Descrição: ${newInfoProduct.value}</p>
                         <p>Categoria: ${category.value}</p>
                         <p>Preço: ${newProductPrice.value}</p>
-                        <p>Data de Fabricação: ${newProductData.value}</p>
-                        <p>Fabricante: ${newProductFactory.value}</p>
+                        
+                        ${testeznho}
                         <div class="btn-content">
                             <ion-icon class="del-btn" name="trash-outline"></ion-icon>
                             <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
@@ -178,7 +184,7 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
     const $prod_Data = document.querySelector('input[name="prod-input-data"]');
     const $prod_Factory = document.querySelector('input[name="prod-input-factory"]');
 
-
+    
     let target = document.querySelector('.aviso');
     if ($prod_Name.value === '' || $prod_Name.value.length <= 5) {
 
@@ -216,24 +222,15 @@ document.querySelector('.div-Products').addEventListener('click', function (even
         const ProductId = Number(id);
         const Product = meuEstoque.Produto.find(meuID => meuID.id === ProductId);
 
-<<<<<<< HEAD
-        if (Product) {
-            const $oldName = Product.productName;
-=======
 
         if (Product) {
             const $oldName = Product.productName;
             const $category = Product.category;
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
             const $oldInfo = Product.productInfo;
             const $oldPrice = Product.productPrice;
             const $oldData = Product.productData;
             const $oldFactory = Product.productFactory;
 
-<<<<<<< HEAD
-
-            console.log('ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nDescrição: ', $oldInfo, '\nPreço: ', $oldPrice, '\nData de fabricação: ', $oldData, '\nFabricante: ', $oldFactory);
-=======
             const html_produto = `
                 Produto
             Id do produto: ${id}
@@ -244,7 +241,6 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             Fabricante: ${$oldFactory}
             `
             console.log(html_produto);
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
 
 
             let target = document.querySelector('.fog');
@@ -255,28 +251,13 @@ document.querySelector('.div-Products').addEventListener('click', function (even
 
 
             // Preenche os campos de edição com os valores do produto atual
-<<<<<<< HEAD
-
-            target.innerHTML =
-=======
             let structHTMLEditorProduto =
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
                 `
                 <div class="edit-wrapper">
                 <div class="close-btn"><ion-icon name="close"></ion-icon>
                 </div>
                 <div class="div-inputs">
                     <form class="edit">
-<<<<<<< HEAD
-                        <div class="tittle-content">
-                            <h1>Edição de produtos</h1>
-                            <hr>
-                        </div>
-                
-                        <div>
-                            <h2>Nome do produto</h2>
-                            <input name="prod-input-name-edit" placeholder="Digite o nome do produto" type="text"
-=======
                     <div class="tittle-content">
                     <h1>Edição de produtos</h1>
                     <hr>
@@ -285,21 +266,17 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                         <div>
                             <h2>Nome do produto</h2>
                             <input name="prod-input-name-edit" placeholder="Digite o nome do produto"  type="text"
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
                                 class="post-crud">
                             <span class="aviso"></span>
                         </div>
                         
                         <div>
-<<<<<<< HEAD
-=======
                         <h2>Categoria</h2>
                         <select disabled name="prod-input-categ" id="input-category-edit" class="select-input">
-                            <option value="">${$category}</option>
+                            <option value="${$category}">${$category}</option>
                         </select>
                     </div>
                         <div>
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
                             <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do produto" type="text" class="post-crud">
                         </div>
                         <div>
@@ -311,11 +288,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                         <div>
                             <h2>Fabricante</h2><input name="prod-input-factory-edit" placeholder="Digite o fabricante do produto" type="text"
                                 class="post-crud">
-<<<<<<< HEAD
-                        </div><button type="submit" class="btnEdit">Editar</button>
-=======
                         </div><button type="submit" class="btnEdit">confirmar</button>
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
                     </form>
                 </div>
                 </div>
@@ -336,7 +309,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             
                     <div>
                         <h2>Nome do produto</h2>
-                        <input name="prod-input-name-edit" placeholder="Digite o nome do produto"  type="text"
+                        <input name="prod-input-name-edit" placeholder="Digite o titulo do chamado"  type="text"
                             class="post-crud">
                         <span class="aviso"></span>
                     </div>
@@ -344,19 +317,19 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                     <div>
                     <h2>Categoria</h2>
                     <select disabled name="prod-input-categ" id="input-category-edit" class="select-input">
-                        <option value="">${$category}</option>
+                        <option value="${$category}">${$category}</option>
                     </select>
                 </div>
                     <div>
-                        <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do produto" type="text" class="post-crud">
+                        <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do chamado" type="text" class="post-crud">
                     </div>
                     <div>
-                        <h2>Preço</h2><input name="prod-input-price-edit" placeholder="Digite o preço do produto" type="text"
+                        <h2>Valor</h2><input name="prod-input-price-edit" placeholder="Digite o valor do Serviço" type="text"
                             class="post-crud">
                     </div>
-                    <h2>Data</h2><input name="prod-input-data-edit" placeholder="Digite a data de fabricação do produto" type="text"
+                    <h2>Data</h2><input name="prod-input-data-edit" placeholder="Digite a data de registro do chamado" type="text"
                         class="post-crud">
-                   <button type="submit" class="btnEdit">confirmar</button>
+                <button type="submit" class="btnEdit">confirmar</button>
                 </form>
             </div>
             </div>
@@ -400,87 +373,6 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                 } else if ($newName.value.length <= 5) {
                     let warning = document.querySelector('.fog .aviso');
 
-<<<<<<< HEAD
-                const produto_console = `
-                    O produto ID ${ProductId}
-                        \nFoi alterado:
-                        \nNome: ${$newName.value}
-                        \nDescrição: ${$newInfo.value}
-                        \nPreço: ${$newPrice.value}
-                        \nData de fabricação: ${$newData.value}
-                        \nFabricante: ${$newFactory.value}
-                        `
-
-                // Verifica se o campo de nome está vazio
-                if ($newName.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newName.value = $oldName;
-                }
-
-                // Verifica se o campo de descrição está vazio
-                if ($newInfo.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newInfo.value = $oldInfo;
-
-                }
-
-                // Verifica se o campo de preço está vazio
-                if ($newPrice.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newPrice.value = $oldPrice;
-
-                }
-
-                // Verifica se o campo de data está vazio
-                if ($newData.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newData.value = $oldData;
-
-                }
-
-                // Verifica se o campo de fabricante está vazio
-                if ($newFactory.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newFactory.value = $oldFactory;
-                }
-                console.log(produto_console)
-                // Chama a função editaProduct passando os valores atualizados
-                meuEstoque.editaProduct(id, $newName, $newInfo, $newPrice, $newData, $newFactory);
-                
-            console.log('ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nDescrição: ', $oldInfo, '\nPreço: ', $oldPrice, '\nData de fabricação: ', $oldData, '\nFabricante: ', $oldFactory);
-                // Verifica se o campo de nome está vazio
-                if ($newName.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newName.value = meuEstoque.productName;
-                }
-
-                // Verifica se o campo de descrição está vazio
-                if ($newInfo.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newInfo.value = $oldInfo;
-
-                }
-
-                // Verifica se o campo de preço está vazio
-                if ($newPrice.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newPrice.value = $oldPrice;
-
-                }
-
-                // Verifica se o campo de data está vazio
-                if ($newData.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newData.value = $oldData;
-
-                }
-
-                // Verifica se o campo de fabricante está vazio
-                if ($newFactory.value === '') {
-                    // Se estiver vazio, preenche com o valor antigo
-                    $newFactory.value = $oldFactory;
-                }
-=======
                     warning.innerHTML = "Seu nome deve conter no mínimo 6 caracteres."
                 } else {
 
@@ -505,7 +397,6 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                     warning.innerHTML = '';
 
                 }
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
             });
 
 
@@ -535,16 +426,9 @@ document.querySelector('.div-Products').addEventListener('click', function (info
 function emptyPoster() {
     const emptyProduct = document.querySelector('.empty-content')
     if (meuEstoque.Produto.length === 0) {
-<<<<<<< HEAD
-        emptyProduct.innerHTML = 'Não há produtos';
-    } else {
-        emptyProduct.innerHTML = '';
-
-=======
         emptyProduct.innerHTML = 'O estoque está vazio';
     } else {
         emptyProduct.innerHTML = '';
->>>>>>> 7474cacbeadad1e7acdc701744da5c0c9fe55cbf
     }
 }
 emptyPoster();
