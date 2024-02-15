@@ -15,7 +15,7 @@
     --set-color-i-word: rgb(80, 200, 250);
     --set-color-word: wheat;
     --set-body-overflow: none;
-    
+
 }
 
 /* BARRA DE HEADER */
@@ -108,21 +108,38 @@ body {
 
 .containner-Products {
     display: flex;
+    flex-direction: column;
     align-items: start;
     justify-content: space-between;
     width: 100%;
     height: auto;
 }
 
-.div-Products .tittle-content,.div-inputs .tittle-content{
+.system-btn-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+}
+
+.system-btn-content button {
+    font-size: 2rem;
+    margin-inline: 5%;
+}
+
+.div-Products .tittle-content,
+.div-inputs .tittle-content {
     text-align: center;
     font-size: 4.5rem;
     color: rgb(138, 138, 138);
 }
+
 .empty-content {
     font-size: 2rem;
     color: rgb(190, 190, 190);
-    }
+}
+
 .div-inputs,
 .div-Products {
     width: 100%;
@@ -147,6 +164,7 @@ body {
     height: 3rem;
     margin: 1rem .5rem;
 }
+
 .div-inputs .inner-data-containner {
     font-size: 3rem;
     height: 100%;
@@ -156,29 +174,43 @@ body {
     width: 100%;
 }
 
-.div-inputs .date-content hr{
+.div-inputs .date-content hr {
     height: 100%;
     margin: 10%;
 }
+
 .div-inputs .date-content {
     display: flex;
     align-items: center;
     height: 10rem;
     width: 100%;
 }
+
 .div-Products .Product-containner .btn-content {
     display: flex;
+    position: relative;
+    top: -10rem;
+    width: 100%;
+    align-items: end;
+    flex-direction: column;
 }
 
-.div-Products .Product-containner {
+.div-Products .Product-containner p {
+    font-weight: 0;
+    width: 90%;
+    line-break: anywhere;
+    margin: 1rem;
+}
+
+.meu-Product .Product-containner {
     color: rgb(0, 0, 0);
     background-color: rgb(199, 199, 199);
     border-radius: .5rem;
-    padding: 1rem;
     margin: 0.5rem;
-    font-size: 2.5rem;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+
 }
 
 .div-Products .meu-Product ion-icon {
@@ -252,7 +284,20 @@ ion-icon {
 
 /*   ION-ICONS */
 
-.fog{
+
+.hide {
+    display: var(--set-body-overflow);
+}
+
+.select-input {
+    margin: .5rem;
+}
+
+.select-input option {
+    font-size: 1.5rem;
+}
+
+.fog {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -260,8 +305,37 @@ ion-icon {
     left: 0;
     background-color: rgb(0, 0, 0, .8);
     z-index: 999;
+
+}
+.fog .edit-wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.fog .edit-wrapper .close-btn ion-icon{
+    position: absolute;
+    margin: 3rem -3rem;
+    transition: scale .3s;
+    font-size: 5rem;
+}
+.fog .edit-wrapper .close-btn ion-icon:hover{
+    scale: 1.2;
+    transform: rotate(90deg);
+    transition: all .3s;
 }
 
-.hide{
-    display: var(--set-body-overflow);
+.fog .div-inputs{
+    border-radius: 2rem;
+    border: solid .5rem var(--set-color-i-word);
+    width: 40%;
+    padding-top: 10rem;
+}
+.aviso{
+    position: absolute;
+    color: rgb(250, 68, 68);
+    font-weight: 100;
+    margin: -1.2rem 0 0 1rem
 }
