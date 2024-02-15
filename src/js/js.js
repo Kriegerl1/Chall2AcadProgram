@@ -135,28 +135,31 @@ const meuEstoque = {
 
             const $productHtml = document.querySelector(`.meu-Product[data-id="${id}"]`); // Corrigido aqui
             if ($productHtml) {
-                let proserie = 'CdP0', serserie = 'CdS0',categorySerial, htmlFactory, htmlData;
+                let proserie = 'CdP0', serserie = 'CdS0', categorySerial, htmlFactory, htmlData;
 
-                if (category.value === 'Produto'){
+                if (category.value === 'Produto') {
                     categorySerial = proserie;
                     htmlFactory = `<p>Fabricante: ${newProductFactory.value}</p>`;
                     htmlData = `<p>Data de Fabricação: ${newProductData.value}</p>`
-                }else{
+                    htmlPrice = `<p>Preço: ${newProductPrice.value}</p>`
+                } else {
                     categorySerial = serserie;
                     htmlFactory = ``;
                     htmlData = `<p>Data do chamado: ${newProductData.value}</p>`;
+                    htmlPrice = `<p>Orçamento: ${newProductPrice.value}</p>`
+
                 }
 
                 $productHtml.innerHTML = `
                     <div class="name-productName">
-                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${ categorySerial + id}</h2>
+                        <h2 class="tittle-name">${newProductName.value} <hr> id de Serie: ${categorySerial + id}</h2>
                     </div>
                     <div class="Product-containner">
                         <p>Descrição: ${newInfoProduct.value}</p>
                         <p>Categoria: ${category.value}</p>
-                        <p>Preço: ${newProductPrice.value}</p>
-                        
-                        ${testeznho}
+                        ${htmlPrice}
+                        ${htmlData}
+                        ${htmlFactory}
                         <div class="btn-content">
                             <ion-icon class="del-btn" name="trash-outline"></ion-icon>
                             <ion-icon class="edit-btn" name="pencil-outline"></ion-icon>
@@ -184,7 +187,7 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
     const $prod_Data = document.querySelector('input[name="prod-input-data"]');
     const $prod_Factory = document.querySelector('input[name="prod-input-factory"]');
 
-    
+
     let target = document.querySelector('.aviso');
     if ($prod_Name.value === '' || $prod_Name.value.length <= 5) {
 
@@ -337,7 +340,6 @@ document.querySelector('.div-Products').addEventListener('click', function (even
         `;
 
             if ($category === 'Produto') {
-                let $teste1 = document.querySelector('.fog');
 
                 target.insertAdjacentHTML('afterbegin', structHTMLEditorProduto);
             }
@@ -388,14 +390,16 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                         $newData.value = $oldData;
 
                     }
-                    if ($newFactory.value === '') {
-                        $newFactory.value = $oldFactory;
+                    if ($category.value === 'Produto') {
+                        if ($newFactory.value === '') {
+                            $newFactory.value = $oldFactory;
 
+                        }
+                    } else {
+                        $newFactory === ''
                     }
-
-                    meuEstoque.editaProduct(id, $newName, $category, $newInfo, $newPrice, $newData, $newFactory);
-                    warning.innerHTML = '';
-
+                        meuEstoque.editaProduct(id, $newName, $category, $newInfo, $newPrice, $newData, $newFactory);
+                        warning.innerHTML = '';
                 }
             });
 
