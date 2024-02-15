@@ -53,7 +53,7 @@ const meuEstoque = {
     `;
 
         let $ListadeProdutos = document.querySelector('.div-Products');
-        
+
         $ListadeProdutos.insertAdjacentHTML('beforeend', structHTMLProduto);
 
         console.log(meuEstoque.Produto)
@@ -106,8 +106,6 @@ const meuEstoque = {
                         </div>
                     </div>
                 `;
-            } else {
-                console.log(`Product com ID ${id} não encontrado.`);
             }
         } else {
             console.log(`Product com ID ${ProductId} não encontrado.`);
@@ -155,7 +153,7 @@ $meuForm.addEventListener('submit', function createProductController(infosdoeven
 
 meuEstoque.readProduct();
 
-// Evento de edição de produto
+// CRUD [UPDATE]
 
 document.querySelector('.div-Products').addEventListener('click', function (event) {
 
@@ -165,33 +163,46 @@ document.querySelector('.div-Products').addEventListener('click', function (even
         const id = event.target.closest('[data-id]').getAttribute('data-id');
         const ProductId = Number(id);
         const Product = meuEstoque.Produto.find(meuID => meuID.id === ProductId);
-        
+
         if (Product) {
             const $oldName = Product.productName;
-            const $oldContent = Product.productInfo;
-            console.log('Clicou no botão de editar\n ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nConteúdo: ', $oldContent);
+            const $oldInfo = Product.productInfo;
+            const $oldPrice = Product.productPrice;
+            const $oldData = Product.productData;
+            const $oldFactory = Product.productFactory;
+
+
+            console.log('ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nDescrição: ', $oldInfo, '\nPreço: ', $oldPrice, '\nData de fabricação: ', $oldData, '\nFabricante: ', $oldFactory);
+
+
             let target = document.querySelector('.fog');
             if (target.classList.contains('hide')) {
                 target.classList.remove('hide');
 
             }
 
+
             // Preenche os campos de edição com os valores do produto atual
+
             target.innerHTML =
                 `
                 <div class="close-btn"><ion-icon name="close"></ion-icon>
                 </div>
                 <div class="div-inputs">
                     <form class="edit">
+                        <div class="tittle-content">
+                            <h1>Edição de produtos</h1>
+                            <hr>
+                        </div>
+                
                         <div>
                             <h2>Nome do produto</h2>
-                            <input name="prod-input-name-edit" placeholder="Digite o nome do produto" value="${$oldName}" type="text"
+                            <input name="prod-input-name-edit" placeholder="Digite o nome do produto" type="text"
                                 class="post-crud">
                             <span class="aviso-nome"></span>
                         </div>
                         <div>
-                            <h2>Descrição</h2><input name="prod-input-info-edit" value="${$oldContent}"
-                                placeholder="Digite a descrição do produto" type="text" class="post-crud">
+                            <h2>Descrição</h2><input name="prod-input-info-edit" placeholder="Digite a descrição do produto" type="text" class="post-crud">
                         </div>
                         <div>
                             <h2>Preço</h2><input name="prod-input-price-edit" placeholder="Digite o preço do produto" type="text"
@@ -202,7 +213,7 @@ document.querySelector('.div-Products').addEventListener('click', function (even
                         <div>
                             <h2>Fabricante</h2><input name="prod-input-factory-edit" placeholder="Digite o fabricante do produto" type="text"
                                 class="post-crud">
-                        </div><button type="submit" class="btnEdit">Enviar</button>
+                        </div><button type="submit" class="btnEdit">Editar</button>
                     </form>
                 </div>
                 </div>
@@ -222,17 +233,99 @@ document.querySelector('.div-Products').addEventListener('click', function (even
             // Adiciona evento de clique ao botão de envio do formulário de edição
             document.querySelector('.btnEdit').addEventListener('click', function (event) {
                 event.preventDefault();
+
                 const $newName = document.querySelector('input[name="prod-input-name-edit"]');
                 const $newInfo = document.querySelector('input[name="prod-input-info-edit"]');
                 const $newPrice = document.querySelector('input[name="prod-input-price-edit"]');
                 const $newData = document.querySelector('input[name="prod-input-data-edit"]');
                 const $newFactory = document.querySelector('input[name="prod-input-factory-edit"]');
 
+                const produto_console = `
+                    O produto ID ${ProductId}
+                        \nFoi alterado:
+                        \nNome: ${$newName.value}
+                        \nDescrição: ${$newInfo.value}
+                        \nPreço: ${$newPrice.value}
+                        \nData de fabricação: ${$newData.value}
+                        \nFabricante: ${$newFactory.value}
+                        `
 
-                meuEstoque.editaProduct(id, $newName, $newInfo, $newPrice, $newData, $newFactory); // Chama o método de edição do produto
+                // Verifica se o campo de nome está vazio
+                if ($newName.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newName.value = $oldName;
+                }
+
+                // Verifica se o campo de descrição está vazio
+                if ($newInfo.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newInfo.value = $oldInfo;
+
+                }
+
+                // Verifica se o campo de preço está vazio
+                if ($newPrice.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newPrice.value = $oldPrice;
+
+                }
+
+                // Verifica se o campo de data está vazio
+                if ($newData.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newData.value = $oldData;
+
+                }
+
+                // Verifica se o campo de fabricante está vazio
+                if ($newFactory.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newFactory.value = $oldFactory;
+                }
+                console.log(produto_console)
+                // Chama a função editaProduct passando os valores atualizados
+                meuEstoque.editaProduct(id, $newName, $newInfo, $newPrice, $newData, $newFactory);
+                
+            console.log('ID do Produto: ', ProductId, '\nNome: ', $oldName, '\nDescrição: ', $oldInfo, '\nPreço: ', $oldPrice, '\nData de fabricação: ', $oldData, '\nFabricante: ', $oldFactory);
+                // Verifica se o campo de nome está vazio
+                if ($newName.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newName.value = meuEstoque.productName;
+                }
+
+                // Verifica se o campo de descrição está vazio
+                if ($newInfo.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newInfo.value = $oldInfo;
+
+                }
+
+                // Verifica se o campo de preço está vazio
+                if ($newPrice.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newPrice.value = $oldPrice;
+
+                }
+
+                // Verifica se o campo de data está vazio
+                if ($newData.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newData.value = $oldData;
+
+                }
+
+                // Verifica se o campo de fabricante está vazio
+                if ($newFactory.value === '') {
+                    // Se estiver vazio, preenche com o valor antigo
+                    $newFactory.value = $oldFactory;
+                }
             });
+
+
         }
+
     }
+
 });
 
 
@@ -253,14 +346,14 @@ document.querySelector('.div-Products').addEventListener('click', function (info
 });
 
 
-// function emptyPoster() {
-//     const emptyProduct = document.querySelector('.empty-content')
-//     if (meuEstoque.Product.length === 0) {
-//         emptyProduct.innerHTML = 'Não há produtos';
-//     } else {
-//         emptyProduct.innerHTML = '';
+function emptyPoster() {
+    const emptyProduct = document.querySelector('.empty-content')
+    if (meuEstoque.Produto.length === 0) {
+        emptyProduct.innerHTML = 'Não há produtos';
+    } else {
+        emptyProduct.innerHTML = '';
 
-//     }
-// }
-// emptyPoster();
+    }
+}
+emptyPoster();
 
